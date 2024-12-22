@@ -1,23 +1,10 @@
 const { Client } = require('whatsapp-web.js');
 const qrcode = require('qrcode');
 const axios = require('axios');
+const path = require('path');
 
-// Configuración del cliente de WhatsApp
-const client = new Client({
-    puppeteer: {
-        executablePath: puppeteer.executablePath(),
-        headless: true,
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-            '--disable-dev-shm-usage',
-            '--no-first-run',
-            '--no-zygote',
-            '--single-process',
-            '--disable-gpu',
-        ],
-    },
-});
+// Inicializar cliente de WhatsApp
+const client = new Client();
 
 client.on('qr', async (qr) => {
     try {
@@ -29,7 +16,7 @@ client.on('qr', async (qr) => {
 
         console.log('QR enviado a Flask correctamente');
     } catch (error) {
-        console.error('Error al enviar el código QR a Flask:', error.message);
+        console.error('Error al enviar el código QR a Flask:', error);
     }
 });
 
@@ -53,7 +40,7 @@ client.on('message', async (message) => {
         const respuesta = response.data.respuesta || 'No se pudo procesar tu solicitud.';
         message.reply(respuesta);
     } catch (error) {
-        console.error('Error al procesar la solicitud:', error.message);
+        console.error('Error al procesar la solicitud:', error);
         message.reply('Hubo un error al procesar tu mensaje. Inténtalo nuevamente más tarde.');
     }
 });
