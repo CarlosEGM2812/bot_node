@@ -5,7 +5,11 @@ const axios = require('axios');
 // Configuración del cliente de WhatsApp
 const client = new Client({
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox'], // Opciones necesarias para entornos como Railway
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+        ],
     },
 });
 
